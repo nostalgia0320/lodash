@@ -1533,6 +1533,199 @@ var GuoJunChao = {
 	},
 
 	/**
+	 * 检查 value 是否是一个类 arguments 对象。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果value是一个 arguments 对象 返回 true，否则返回 false。
+	 */
+	isArguments: function(arg) {
+		if (arg.callee) {
+			return true
+		} else {
+			return false
+		}
+	},
+	/**
+	 * 检查 value 是否是 Array 类对象。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果value是一个数组返回 true，否则返回 false。
+	 */
+	isArray: function(arr) {
+		if (arr instanceof Array) {
+			return true
+		} else {
+			return false
+		}
+	},
+	/**
+	 * 检查 value 是否是原始 boolean 类型或者对象。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 是一个布尔值，那么返回 true，否则返回 false。
+	 */
+	isBoolean: function(value) {
+
+		return typeof value === 'boolean'
+	},
+	/**
+	 * 检查 value 是否是 Date 对象。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 是一个日期对象，那么返回 true，否则返回 false。
+	 */
+	isDate: function(value) {
+
+		return value instanceof Date
+	},
+	/**
+	 * 检查 value 是否是原始有限数值。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 是一个有限数值，那么返回 true，否则返回 false。
+	 */
+	isFinite: function(value) {
+		if (typeof value == 'number') {
+			if (value === 0) {
+				return true
+			} else if (value + value == value) {
+				return false
+			} else {
+				return true
+			}
+		} else {
+			return false
+		}
+	},
+	/**
+	 * 检查 value 是否是 Function 对象。
+	 * @param  value (*): 要检查的值
+	 * @return (boolean): 如果 value 是一个函数，那么返回 true，否则返回 false。
+	 */
+	isFunction: function(value) {
+
+		return typeof value === 'function'
+	},
+	/**
+	 * 检查 value 是否是 NaN。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 是一个 NaN，那么返回 true，否则返回 false。
+	 */
+	isNaN: function(value) {
+		if (value !== value) {
+			return true
+		} else {
+			if (typeof value == 'object') {
+				if (value.valueOf() !== value.valueOf()) {
+					return true
+				}
+			} else {
+				return false
+			}
+		}
+	},
+	/**
+	 * 检查 valuealue 是否是 null。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 为null，那么返回 true，否则返回 false。
+	 */
+	isNull: function(value) {
+		if (value == undefined && value !== undefined) {
+			return true
+		} else {
+			return false
+		}
+	},
+	/**
+	 * 检查 value 是否是原始Number数值型 或者 对象。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 为一个对象，那么返回 true，否则返回 false。
+	 */
+	isNumber: function(value) {
+		if (typeof value == 'number' || typeof value.valueOf() == 'number') {
+			return true
+		} else {
+			return false
+		}
+	},
+	/**
+	 * 检查 value 是否为 Object 的 language type
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 为一个对象，那么返回 true，否则返回 false。
+	 */
+	isObject: function(value) {
+		if (this.isNull(value)) {
+			return false
+		} else if (this.isFunction(value)) {
+			return true
+		} else if (typeof value == 'object') {
+			return true
+		} else {
+			return false
+		}
+	},
+	/**
+	 * 检查 value 是否为RegExp对象。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 为一个正则表达式，那么返回 true，否则返回 false。
+	 */
+	isRegExp: function(value) {
+
+		return value instanceof RegExp
+	},
+	/**
+	 * 检查 value 是否是原始字符串String或者对象。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 为一个字符串，那么返回 true，否则返回 false。
+	 */
+	isString: function(value) {
+
+		return typeof value == 'string'
+	},
+	/**
+	 * 检查 value 是否是 undefined.
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 是 undefined ，那么返回 true，否则返回 false。
+	 */
+	isUndefined: function(value) {
+
+		return typeof value == 'undefined'
+	},
+	/**
+	 * 是否是类数组对象或字符串
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
+	iscollection: function(value) {
+
+		return this.isObject(value) || this.isString(value)
+	},
+
+	/**
+	 * 返回collection（集合）的长度，如果集合是类数组或字符串，返回其 length ；如果集合是对象，返回其可枚举属性的个数。
+	 * @param  collection (Array|Object): 要检查的集合
+	 * @return (number): 返回集合的长度。
+	 */
+	size: function(collection) {
+		var count = 0
+		if (this.iscollection(collection)) {
+			for (key in collection) {
+				count++
+			}
+		}
+		return count
+	},
+
+	/**
+	 * 检查 value 是否为一个空对象，集合，映射或者set。
+	 * @param  value (*): 要检查的值。
+	 * @return (boolean): 如果 value 为空，那么返回 true，否则返回 false。
+	 */
+	isEmpty: function(value) {
+		if (typeof value == 'object' || typeof value == 'string') {
+			if (this.size(value)) {
+				return false
+			}
+		}
+		return true
+	},
+
+	/**
 	 * 检查 value(值) 是否在 collection(集合) 中。如果 collection(集合)是一个字符串，那么检查 value（值，子字符串） 是否在字符串中， 否则使用 SameValueZero 做等值比较。 如果指定 fromIndex 是负数，那么从 collection(集合) 的结尾开始检索。
 	 * @param  collection (Array|Object|string): 要检索的集合。
 	 * @param  value (*): 要检索的值。
